@@ -1,3 +1,4 @@
+import os
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -37,7 +38,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = db_url()
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -48,6 +49,8 @@ def run_migrations_offline():
     with context.begin_transaction():
         context.run_migrations()
 
+def db_url():
+    return os.getenv('DATABASE_URL')
 
 def run_migrations_online():
     """Run migrations in 'online' mode.
