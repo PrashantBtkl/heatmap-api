@@ -49,6 +49,8 @@ def run_migrations_offline():
         context.run_migrations()
 
 def db_url():
+    if os.getenv("OFFLINE") == "true":
+        return "postgresql://postgres:password@db:5432"
     return os.getenv('DATABASE_URL')
 
 def run_migrations_online():
